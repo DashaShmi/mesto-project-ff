@@ -8,15 +8,32 @@
 
 // @todo: Вывести карточки на страницу
 
-const cardData1 = {
-  name: "Архыз",
-  link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg",
-};
-
-const cardData2 = {
-  name: "Челябинская область",
-  link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg",
-};
+const initialCards = [
+  {
+    name: "Архыз",
+    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg",
+  },
+  {
+    name: "Челябинская область",
+    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg",
+  },
+  {
+    name: "Иваново",
+    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg",
+  },
+  {
+    name: "Камчатка",
+    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg",
+  },
+  {
+    name: "Холмогорский район",
+    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg",
+  },
+  {
+    name: "Байкал",
+    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg",
+  },
+];
 
 function createCard(cardData) {
   const templateElement = document.getElementById("card-template");
@@ -37,9 +54,10 @@ function createCard(cardData) {
 
   return clonedCard;
 }
-const createdCard = createCard(cardData1);
-const createdCard2 = createCard(cardData2);
 
 const cardList = document.querySelector(".places__list");
-cardList.append(createdCard);
-cardList.append(createdCard2);
+
+initialCards.forEach(function (cardData) {
+  const createdCard = createCard(cardData);
+  cardList.append(createdCard);
+});
