@@ -2,6 +2,8 @@ const templateElement = document.getElementById("card-template");
 const card = templateElement.content.querySelector(".card");
 const cardList = document.querySelector(".places__list");
 
+import "./index.css";
+
 function createCard(cardData, deleteCallback) {
   const clonedCard = card.cloneNode(true);
   const deleteButton = clonedCard.querySelector(".card__delete-button");
