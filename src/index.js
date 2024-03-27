@@ -36,26 +36,27 @@ initialCards.forEach(function (cardData) {
 });
 
 const openProfileEditButton = document.querySelector(".profile__edit-button");
-const popupCloseButton = document.querySelector(".popup__close");
-const modal = document.querySelector(".popup");
+const popupCloseButtons = document.querySelectorAll(".popup__close");
+
+// const cardAddButton = document.querySelector("profile__add-button");
 
 // Функции для открытия/закрытия модального окна "редактирования профиля"
 
 openProfileEditButton.addEventListener("click", function () {
-  modal.style.display = "flex";
+  document.querySelector(".popup_type_edit").style.display = "flex";
 });
 
-popupCloseButton.addEventListener("click", function () {
-  modal.style.display = "none";
+popupCloseButtons.forEach(function (button) {
+  button.addEventListener("click", function () {
+    const modalsProfile = document.querySelectorAll(".popup");
+    modalsProfile.forEach(function (modal) {
+      modal.style.display = "none";
+    });
+  });
 });
 
-const openAddCard = document.querySelector(".profile__add-button");
-const modalMesto = document.querySelector(".popup_type_new-card");
-
-openAddCard.addEventListener("click", function () {
-  modalMesto.style.display = "flex";
-});
-
-popupCloseButton.addEventListener("click", function () {
-  modalMesto.style.display = "none";
-});
+document
+  .querySelector(".profile__add-button")
+  .addEventListener("click", function () {
+    document.querySelector(".popup_type_new-card").style.display = "flex";
+  });
