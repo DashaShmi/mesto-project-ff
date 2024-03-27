@@ -43,11 +43,6 @@ const modal = document.querySelector(".popup");
 
 openProfileEditButton.addEventListener("click", function () {
   modal.style.display = "flex";
-
-  // Перебираем полученные элементы и закрываем их
-  popups.forEach(function (popup) {
-    popup.style.display = "none"; // Пример закрытия попапа путем изменения стиля
-  });
 });
 
 popupCloseButton.addEventListener("click", function () {
