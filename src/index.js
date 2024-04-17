@@ -24,9 +24,9 @@ const nameProfile = document.querySelector(".profile__title");
 const descrProfile = document.querySelector(".profile__description");
 const profileForm = document.querySelector(".popup__form[name='edit-profile']");
 // popups
-const popupTypeImage = document.querySelector(".popup_type_image");
-const popupEdit = document.querySelector(".popup_type_edit");
-const popupNewCard = document.querySelector(".popup_type_new-card");
+const bigImagePopup = document.querySelector(".popup_type_image");
+const profilePopup = document.querySelector(".popup_type_edit");
+const newCardPopup = document.querySelector(".popup_type_new-card");
 // forms
 
 function deleteCard(createdCard) {
@@ -40,14 +40,14 @@ function handleLikeButton(likeButton) {
 
 // Функции для открытия модального окна "редактирования профиля"
 openProfileEditButton.addEventListener("click", function () {
-  openPopup(popupEdit);
+  openPopup(profilePopup);
   nameInput.value = nameProfile.textContent;
   descrInput.value = descrProfile.textContent;
 });
 
 // Функция открытия попапа, если пыкать на карточу
 function openPopupFromImg(cardData) {
-  openPopup(popupTypeImage);
+  openPopup(bigImagePopup);
 
   const popupImage = document.querySelector(".popup__image");
   popupImage.src = cardData.link;
@@ -57,13 +57,13 @@ function openPopupFromImg(cardData) {
 }
 
 // Обработчик отправки формы
-function handleFormSubmit(evt) {
+function handleProfileFormSubmit(evt) {
   evt.preventDefault();
   nameProfile.textContent = nameInput.value;
   descrProfile.textContent = descrInput.value;
   closeAllPopups();
 }
-profileForm.addEventListener("submit", handleFormSubmit);
+profileForm.addEventListener("submit", handleProfileFormSubmit);
 
 // Функция закрытия всех попапов
 function closeAllPopups() {
@@ -90,7 +90,7 @@ popupCloseButtons.forEach(function (button) {
 document
   .querySelector(".profile__add-button")
   .addEventListener("click", function () {
-    openPopup(popupNewCard);
+    openPopup(newCardPopup);
   });
 
 // Обработчик отправки формы для окна "добавить новое место"
