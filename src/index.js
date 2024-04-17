@@ -5,29 +5,28 @@ import { initialCards } from "./components/cards";
 
 import { closePopup, openPopup } from "./components/modal";
 
-const cardList = document.querySelector(".places__list");
-
-initialCards.forEach(function (cardData) {
-  const createdCard = createCard(
-    cardData,
-    openPopupFromImg,
-    deleteCard,
-    handleLikeButton
-  );
-  cardList.append(createdCard);
-});
-
-const openProfileEditButton = document.querySelector(".profile__edit-button");
-const nameInput = document.querySelector(".popup__input_type_name");
-const descrInput = document.querySelector(".popup__input_type_description");
-const nameProfile = document.querySelector(".profile__title");
-const descrProfile = document.querySelector(".profile__description");
-const profileForm = document.querySelector(".popup__form[name='edit-profile']");
 // popups
 const bigImagePopup = document.querySelector(".popup_type_image");
 const profilePopup = document.querySelector(".popup_type_edit");
 const newCardPopup = document.querySelector(".popup_type_new-card");
 // forms
+const profileForm = document.querySelector(".popup__form[name='edit-profile']");
+const formNewPlace = document.querySelector(".popup__form[name='new-place']");
+// профиль
+const profileEditButton = document.querySelector(".profile__edit-button");
+const profileNameInput = document.querySelector(".popup__input_type_name");
+const profileDescrInput = document.querySelector(
+  ".popup__input_type_description"
+);
+const profileName = document.querySelector(".profile__title");
+const profileDescr = document.querySelector(".profile__description");
+//новое место
+const newPlaceNameInput = document.querySelector(
+  ".popup__input_type_card-name"
+);
+const newPlaceUrlInput = document.querySelector(".popup__input_type_url");
+// остальное
+const cardList = document.querySelector(".places__list");
 
 function deleteCard(createdCard) {
   createdCard.remove();
@@ -39,10 +38,10 @@ function handleLikeButton(likeButton) {
 }
 
 // Функции для открытия модального окна "редактирования профиля"
-openProfileEditButton.addEventListener("click", function () {
+profileEditButton.addEventListener("click", function () {
   openPopup(profilePopup);
-  nameInput.value = nameProfile.textContent;
-  descrInput.value = descrProfile.textContent;
+  profileNameInput.value = profileName.textContent;
+  profileDescrInput.value = profileDescr.textContent;
 });
 
 // Функция открытия попапа, если пыкать на карточу
@@ -59,8 +58,8 @@ function openPopupFromImg(cardData) {
 // Обработчик отправки формы
 function handleProfileFormSubmit(evt) {
   evt.preventDefault();
-  nameProfile.textContent = nameInput.value;
-  descrProfile.textContent = descrInput.value;
+  profileName.textContent = profileNameInput.value;
+  profileDescr.textContent = profileDescrInput.value;
   closeAllPopups();
 }
 profileForm.addEventListener("submit", handleProfileFormSubmit);
@@ -94,29 +93,22 @@ document
   });
 
 // Обработчик отправки формы для окна "добавить новое место"
-const nameInputNewPlace = document.querySelector(
-  ".popup__input_type_card-name"
-);
-const urlInput = document.querySelector(".popup__input_type_url");
-const formNewPlace = document.querySelector(".popup__form[name='new-place']");
-
 function handleFormNewPlaсe(evt) {
   evt.preventDefault();
-  const name = nameInputNewPlace.value;
-  const url = urlInput.value;
-  const cardDataNewPlace = {
+  const name = newPlaceNameInput.value;
+  const url = newPlaceUrlInput.value;
+  const cardDataNew = {
     name: name,
     link: url,
   };
   const createdCard = createCard(
-    cardDataNewPlace,
+    cardDataNew,
     openPopupFromImg,
     deleteCard,
     handleLikeButton
   );
   cardList.prepend(createdCard);
   closeAllPopups();
-  // debugger;
 }
 formNewPlace.addEventListener("submit", handleFormNewPlaсe);
 
@@ -128,4 +120,15 @@ popups.forEach(function (popup) {
       closePopup(popup);
     }
   });
+});
+
+// юлпбнанал
+initialCards.forEach(function (cardData) {
+  const createdCard = createCard(
+    cardData,
+    openPopupFromImg,
+    deleteCard,
+    handleLikeButton
+  );
+  cardList.append(createdCard);
 });
