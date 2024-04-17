@@ -1,12 +1,9 @@
-import {
-  initialCards,
-  createCard,
-  deleteCard,
-  handleLikeButton,
-} from "./components/cards";
+import { createCard } from "./components/card";
 import "./index.css";
 
-import { openPopupFromImg, closePopup, openPopup } from "./components/modal";
+import { initialCards } from "./components/cards";
+
+import { closePopup, openPopup } from "./components/modal";
 
 const cardList = document.querySelector(".places__list");
 
@@ -26,14 +23,38 @@ const descrInput = document.querySelector(".popup__input_type_description");
 const nameProfile = document.querySelector(".profile__title");
 const descrProfile = document.querySelector(".profile__description");
 const profileForm = document.querySelector(".popup__form[name='edit-profile']");
+// popups
+const popupTypeImage = document.querySelector(".popup_type_image");
+const popupEdit = document.querySelector(".popup_type_edit");
+const popupNewCard = document.querySelector(".popup_type_new-card");
+// forms
+
+function deleteCard(createdCard) {
+  createdCard.remove();
+}
+
+// Функция обработчика лайка
+function handleLikeButton(likeButton) {
+  likeButton.classList.toggle("card__like-button_is-active");
+}
 
 // Функции для открытия модального окна "редактирования профиля"
 openProfileEditButton.addEventListener("click", function () {
-  const popup = document.querySelector(".popup_type_edit");
-  openPopup(popup);
+  openPopup(popupEdit);
   nameInput.value = nameProfile.textContent;
   descrInput.value = descrProfile.textContent;
 });
+
+// Функция открытия попапа, если пыкать на карточу
+function openPopupFromImg(cardData) {
+  openPopup(popupTypeImage);
+
+  const popupImage = document.querySelector(".popup__image");
+  popupImage.src = cardData.link;
+
+  const popupDescr = document.querySelector(".popup__caption");
+  popupDescr.innerText = cardData.name;
+}
 
 // Обработчик отправки формы
 function handleFormSubmit(evt) {
@@ -69,8 +90,7 @@ popupCloseButtons.forEach(function (button) {
 document
   .querySelector(".profile__add-button")
   .addEventListener("click", function () {
-    const popup = document.querySelector(".popup_type_new-card");
-    openPopup(popup);
+    openPopup(popupNewCard);
   });
 
 // Обработчик отправки формы для окна "добавить новое место"
