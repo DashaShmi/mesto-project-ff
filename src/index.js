@@ -1,4 +1,4 @@
-import { createCard } from "./components/card";
+import { createCard, deleteCard, handleLikeButton } from "./components/card";
 import "./index.css";
 
 import { initialCards } from "./components/cards";
@@ -28,15 +28,6 @@ const newPlaceUrlInput = document.querySelector(".popup__input_type_url");
 // остальное
 const cardList = document.querySelector(".places__list");
 
-function deleteCard(createdCard) {
-  createdCard.remove();
-}
-
-// Функция обработчика лайка
-function handleLikeButton(likeButton) {
-  likeButton.classList.toggle("card__like-button_is-active");
-}
-
 // Функции для открытия модального окна "редактирования профиля"
 profileEditButton.addEventListener("click", function () {
   openPopup(profilePopup);
@@ -60,28 +51,16 @@ function handleProfileFormSubmit(evt) {
   evt.preventDefault();
   profileName.textContent = profileNameInput.value;
   profileDescr.textContent = profileDescrInput.value;
-  closeAllPopups();
+  closePopup(profilePopup);
 }
 profileForm.addEventListener("submit", handleProfileFormSubmit);
-
-// Функция закрытия всех попапов
-function closeAllPopups() {
-  const popups = document.querySelectorAll(".popup");
-  popups.forEach(closePopup);
-}
-
-// Закрытие попапов на esc
-document.addEventListener("keydown", function (evt) {
-  if (evt.key === "Escape" || evt.keyCode === 27) {
-    closeAllPopups();
-  }
-});
 
 // Функция закрытия попапов на крестик
 const popupCloseButtons = document.querySelectorAll(".popup__close");
 popupCloseButtons.forEach(function (button) {
   button.addEventListener("click", function () {
-    closeAllPopups();
+    const popup = button.closest(".popup");
+    closePopup(popup);
   });
 });
 
@@ -108,7 +87,7 @@ function handleFormNewPlaсe(evt) {
     handleLikeButton
   );
   cardList.prepend(createdCard);
-  closeAllPopups();
+  closePopup(newCardPopup);
 }
 formNewPlace.addEventListener("submit", handleFormNewPlaсe);
 

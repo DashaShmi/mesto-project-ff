@@ -35,3 +35,12 @@ export function createCard(
 
   return clonedCard;
 }
+
+export function deleteCard(createdCard) {
+  createdCard.remove();
+}
+
+// Функция обработчика лайка
+export function handleLikeButton(likeButton) {
+  likeButton.classList.toggle("card__like-button_is-active");
+}
