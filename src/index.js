@@ -149,8 +149,8 @@ const checkInputValidity = (formElement, inputElement) => {
 
 // checkInputValidity(editProfileForm, descriptionInput);
 
-const setEventListeners = (formElement) => {
-  const inputList = Array.from(formElement.querySelectorAll(".popup__input"));
+const setEventListeners = (formElement, inputSelector) => {
+  const inputList = Array.from(formElement.querySelectorAll(inputSelector));
   inputList.forEach((inputElement) => {
     inputElement.addEventListener("input", function () {
       checkInputValidity(formElement, inputElement);
@@ -160,14 +160,17 @@ const setEventListeners = (formElement) => {
 
 // setEventListeners(editProfileForm);
 
-function enableValidation(formSelector) {
-  const formList = Array.from(document.querySelectorAll(formSelector));
+function enableValidation(options) {
+  const formList = Array.from(document.querySelectorAll(options.formSelector));
   formList.forEach(function (formElement) {
     formElement.addEventListener("submit", function (evt) {
       evt.preventDefault();
     });
-    setEventListeners(formElement);
+    setEventListeners(formElement, options.inputSelector);
   });
 }
 
-enableValidation(".popup__form");
+enableValidation({
+  formSelector: ".popup__form",
+  inputSelector: ".popup__input",
+});
