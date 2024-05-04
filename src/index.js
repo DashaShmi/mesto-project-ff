@@ -111,3 +111,33 @@ initialCards.forEach(function (cardData) {
   );
   cardList.append(createdCard);
 });
+
+// для упрощения теста
+// убрать потом
+openPopup(profilePopup);
+
+function hideInputError(formElement, inputElement) {
+  const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
+  inputElement.classList.remove("form__input_type_error");
+  errorElement.classList.remove("form__input-error_active");
+  errorElement.textContent = "";
+}
+
+const editProfileForm = document.querySelector(
+  ".popup__form[name='edit-profile']"
+);
+
+const descriptionInput = editProfileForm.querySelector("[name='description']");
+
+hideInputError(editProfileForm, descriptionInput);
+
+debugger;
+
+function showInputError(formElement, inputElement, errorMessage) {
+  const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
+  inputElement.classList.add("form__input_type_error");
+  errorElement.textContent = errorMessage;
+  errorElement.classList.add("form__input-error_active");
+}
+
+showInputError(editProfileForm, descriptionInput, "Фигня");
