@@ -116,70 +116,53 @@ initialCards.forEach(function (cardData) {
 // убрать потом
 openPopup(profilePopup);
 
-function hideInputError(
-  formElement,
-  inputElement,
-  inputErrorClass,
-  errorClass
-) {
+function hideInputError(formElement, inputElement, options) {
   const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
-  inputElement.classList.remove(inputErrorClass);
-  errorElement.classList.remove(errorClass);
+  inputElement.classList.remove(options.inputErrorClass);
+  errorElement.classList.remove(options.errorClass);
   errorElement.textContent = "-";
 }
 
-function showInputError(
-  formElement,
-  inputElement,
-  errorMessage,
-  inputErrorClass,
-  errorActive
-) {
+function showInputError(formElement, inputElement, errorMessage, options) {
   const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
-  inputElement.classList.add(inputErrorClass);
+  inputElement.classList.add(options.inputErrorClass);
   errorElement.textContent = errorMessage;
-  errorElement.classList.add(errorActive);
+  errorElement.classList.add(options.errorClass);
 }
 
-const checkInputValidity = (formElement, inputElement) => {
+const checkInputValidity = (formElement, inputElement, options) => {
   if (inputElement.validity.valid) {
-    hideInputError(
-      formElement,
-      inputElement,
-      "form__input_type_error",
-      "form__input-error_active"
-    );
+    hideInputError(formElement, inputElement, options);
   } else {
     showInputError(
       formElement,
       inputElement,
       inputElement.validationMessage,
-      "form__input_type_error",
-      "form__input-error_active"
+      options
     );
   }
 };
 
 // checkInputValidity(editProfileForm, descriptionInput);
 
-const setEventListeners = (formElement, inputSelector) => {
-  const inputList = Array.from(formElement.querySelectorAll(inputSelector));
+const setEventListeners = (formElement, options) => {
+  const inputList = Array.from(
+    formElement.querySelectorAll(options.inputSelector)
+  );
   inputList.forEach((inputElement) => {
     inputElement.addEventListener("input", function () {
-      checkInputValidity(formElement, inputElement);
+      checkInputValidity(formElement, inputElement, options);
     });
   });
 };
 
-// setEventListeners(editProfileForm);
-
-function enableValidation(options) {
+functionc(options) {
   const formList = Array.from(document.querySelectorAll(options.formSelector));
   formList.forEach(function (formElement) {
     formElement.addEventListener("submit", function (evt) {
       evt.preventDefault();
     });
-    setEventListeners(formElement, options.inputSelector);
+    setEventListeners(formElement, options);
   });
 }
 
@@ -187,4 +170,5 @@ enableValidation({
   formSelector: ".popup__form",
   inputSelector: ".popup__input",
   inputErrorClass: "form__input_type_error",
+  errorClass: "form__input-error_active",
 });
