@@ -120,18 +120,15 @@ function hideInputError(formElement, inputElement) {
   const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
   inputElement.classList.remove("form__input_type_error");
   errorElement.classList.remove("form__input-error_active");
-  errorElement.textContent = "";
+  errorElement.textContent = "-";
 }
 
 const editProfileForm = document.querySelector(
   ".popup__form[name='edit-profile']"
 );
-
 const descriptionInput = editProfileForm.querySelector("[name='description']");
 
-hideInputError(editProfileForm, descriptionInput);
-
-debugger;
+// hideInputError(editProfileForm, descriptionInput);
 
 function showInputError(formElement, inputElement, errorMessage) {
   const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
@@ -140,4 +137,37 @@ function showInputError(formElement, inputElement, errorMessage) {
   errorElement.classList.add("form__input-error_active");
 }
 
-showInputError(editProfileForm, descriptionInput, "Фигня");
+// showInputError(editProfileForm, descriptionInput, "Фигня");
+
+const checkInputValidity = (formElement, inputElement) => {
+  if (inputElement.validity.valid) {
+    hideInputError(formElement, inputElement);
+  } else {
+    showInputError(formElement, inputElement, inputElement.validationMessage);
+  }
+};
+
+// checkInputValidity(editProfileForm, descriptionInput);
+
+const setEventListeners = (formElement) => {
+  const inputList = Array.from(formElement.querySelectorAll(".popup__input"));
+  inputList.forEach((inputElement) => {
+    inputElement.addEventListener("input", function () {
+      checkInputValidity(formElement, inputElement);
+    });
+  });
+};
+
+// setEventListeners(editProfileForm);
+
+function enableValidation(formSelector) {
+  const formList = Array.from(document.querySelectorAll(formSelector));
+  formList.forEach(function (formElement) {
+    formElement.addEventListener("submit", function (evt) {
+      evt.preventDefault();
+    });
+    setEventListeners(formElement);
+  });
+}
+
+enableValidation(".popup__form");
