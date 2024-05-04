@@ -116,34 +116,47 @@ initialCards.forEach(function (cardData) {
 // убрать потом
 openPopup(profilePopup);
 
-function hideInputError(formElement, inputElement) {
+function hideInputError(
+  formElement,
+  inputElement,
+  inputErrorClass,
+  errorClass
+) {
   const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
-  inputElement.classList.remove("form__input_type_error");
-  errorElement.classList.remove("form__input-error_active");
+  inputElement.classList.remove(inputErrorClass);
+  errorElement.classList.remove(errorClass);
   errorElement.textContent = "-";
 }
 
-const editProfileForm = document.querySelector(
-  ".popup__form[name='edit-profile']"
-);
-const descriptionInput = editProfileForm.querySelector("[name='description']");
-
-// hideInputError(editProfileForm, descriptionInput);
-
-function showInputError(formElement, inputElement, errorMessage) {
+function showInputError(
+  formElement,
+  inputElement,
+  errorMessage,
+  inputErrorClass,
+  errorActive
+) {
   const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
-  inputElement.classList.add("form__input_type_error");
+  inputElement.classList.add(inputErrorClass);
   errorElement.textContent = errorMessage;
-  errorElement.classList.add("form__input-error_active");
+  errorElement.classList.add(errorActive);
 }
-
-// showInputError(editProfileForm, descriptionInput, "Фигня");
 
 const checkInputValidity = (formElement, inputElement) => {
   if (inputElement.validity.valid) {
-    hideInputError(formElement, inputElement);
+    hideInputError(
+      formElement,
+      inputElement,
+      "form__input_type_error",
+      "form__input-error_active"
+    );
   } else {
-    showInputError(formElement, inputElement, inputElement.validationMessage);
+    showInputError(
+      formElement,
+      inputElement,
+      inputElement.validationMessage,
+      "form__input_type_error",
+      "form__input-error_active"
+    );
   }
 };
 
@@ -173,4 +186,5 @@ function enableValidation(options) {
 enableValidation({
   formSelector: ".popup__form",
   inputSelector: ".popup__input",
+  inputErrorClass: "form__input_type_error",
 });
