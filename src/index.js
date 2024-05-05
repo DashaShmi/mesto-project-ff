@@ -29,6 +29,7 @@ const cardList = document.querySelector(".places__list");
 
 // Функции для открытия модального окна "редактирования профиля"
 profileEditButton.addEventListener("click", function () {
+  clearValidation(profileForm);
   openPopup(profilePopup);
   profileNameInput.value = profileName.textContent;
   profileDescrInput.value = profileDescr.textContent;
@@ -115,7 +116,7 @@ initialCards.forEach(function (cardData) {
 // убрать потом
 openPopup(profilePopup);
 
-enableValidation({
+const validationFunctions = enableValidation({
   formSelector: ".popup__form",
   inputSelector: ".popup__input",
   submitButtonSelector: ".popup__button",
@@ -123,3 +124,6 @@ enableValidation({
   errorClass: "form__input-error_active",
   inactiveButtonClass: "popup__button_inactive",
 });
+
+// Это мне жеско подсказали как сделать чтобы clearValidation была видна
+const clearValidation = validationFunctions.clearValidation;

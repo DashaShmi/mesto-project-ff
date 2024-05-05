@@ -1,5 +1,3 @@
-export function clearValidation(formElement) {}
-
 export function enableValidation(options) {
   // functions
   function hideInputError(formElement, inputElement) {
@@ -74,6 +72,18 @@ export function enableValidation(options) {
     }
   };
 
+  function clearValidation(formElement) {
+    const inputList = Array.from(
+      formElement.querySelectorAll(options.inputSelector)
+    );
+    inputList.forEach((input) => {
+      hideInputError(formElement, input);
+    });
+
+    const button = formElement.querySelector(options.submitButtonSelector);
+    disableButton(button);
+  }
+
   // Validation activation
   const formList = Array.from(document.querySelectorAll(options.formSelector));
   formList.forEach(function (formElement) {
@@ -82,6 +92,10 @@ export function enableValidation(options) {
     });
     setEventListeners(formElement, options);
   });
+
+  return {
+    clearValidation: clearValidation,
+  };
 }
 
 // Функция валидности всех полей (принимает массив полей)
