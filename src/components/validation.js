@@ -1,5 +1,7 @@
+export function clearValidation(formElement) {}
+
 export function enableValidation(options) {
-  //
+  // functions
   function hideInputError(formElement, inputElement) {
     const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
     inputElement.classList.remove(options.inputErrorClass);
@@ -43,12 +45,36 @@ export function enableValidation(options) {
     inputList.forEach((inputElement) => {
       inputElement.addEventListener("input", function () {
         checkInputValidity(formElement, inputElement, options);
-        const button = formElement.querySelector(".popup__button");
+        const button = formElement.querySelector(options.submitButtonSelector);
         toggleButtonState(inputList, button);
       });
     });
   };
 
+  function enableButton(buttonElement) {
+    buttonElement.disabled = true;
+    buttonElement.classList.add(options.inactiveButtonClass);
+  }
+
+  function disableButton(buttonElement) {
+    buttonElement.disabled = false;
+    buttonElement.classList.remove(options.inactiveButtonClass);
+  }
+
+  // Функция принимает массив полей ввода
+  // и элемент кнопки, состояние которой нужно менять
+  const toggleButtonState = (inputList, buttonElement) => {
+    // Если есть хотя бы один невалидный инпут
+    if (hasInvalidInput(inputList)) {
+      // сделай кнопку неактивной
+      enableButton(buttonElement);
+    } else {
+      // иначе сделай кнопку активной
+      disableButton(buttonElement);
+    }
+  };
+
+  // Validation activation
   const formList = Array.from(document.querySelectorAll(options.formSelector));
   formList.forEach(function (formElement) {
     formElement.addEventListener("submit", function (evt) {
@@ -67,19 +93,4 @@ const hasInvalidInput = (inputList) => {
     // hasInvalidInput вернёт true
     return !inputElement.validity.valid;
   });
-};
-
-// Функция принимает массив полей ввода
-// и элемент кнопки, состояние которой нужно менять
-const toggleButtonState = (inputList, buttonElement) => {
-  // Если есть хотя бы один невалидный инпут
-  if (hasInvalidInput(inputList)) {
-    // сделай кнопку неактивной
-    buttonElement.disabled = true;
-    buttonElement.classList.add("popup__button_inactive");
-  } else {
-    // иначе сделай кнопку активной
-    buttonElement.disabled = false;
-    buttonElement.classList.remove("popup__button_inactive");
-  }
 };

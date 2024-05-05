@@ -115,11 +115,11 @@ initialCards.forEach(function (cardData) {
 // убрать потом
 openPopup(profilePopup);
 
-// checkInputValidity(editProfileForm, descriptionInput);
-
 enableValidation({
   formSelector: ".popup__form",
   inputSelector: ".popup__input",
+  submitButtonSelector: ".popup__button",
   inputErrorClass: "form__input_type_error",
   errorClass: "form__input-error_active",
+  inactiveButtonClass: "popup__button_inactive",
 });
