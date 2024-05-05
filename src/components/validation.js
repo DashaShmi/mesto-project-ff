@@ -15,6 +15,15 @@ export function enableValidation(options) {
   }
 
   const checkInputValidity = (formElement, inputElement) => {
+    if (inputElement.validity.patternMismatch) {
+      // встроенный метод setCustomValidity принимает на вход строку
+      // и заменяет ею стандартное сообщение об ошибке
+      inputElement.setCustomValidity(inputElement.dataset.errorMessage);
+    } else {
+      // если передать пустую строку, то будут доступны
+      // стандартные браузерные сообщения
+      inputElement.setCustomValidity("");
+    }
     if (inputElement.validity.valid) {
       hideInputError(formElement, inputElement, options);
     } else {

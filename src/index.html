@@ -53,6 +53,8 @@
               required
               minlength="2"
               maxlength="40"
+              pattern="^[а-яА-ЯёЁa-zA-Z \-]+$"
+              data-error-message="Разрешены только латинские, кириллические буквы, знаки дефиса и пробелы"
             />
             <p class="form__input-error name-input-error">
               Вы пропустили это поле.
@@ -67,6 +69,8 @@
               required
               minlength="2"
               maxlength="200"
+              pattern="^[а-яА-ЯёЁa-zA-Z \-]+$"
+              data-error-message="Разрешены только латинские, кириллические буквы, знаки дефиса и пробелы"
             />
             <p class="form__input-error description-input-error">
               Введите адрес сайта.
