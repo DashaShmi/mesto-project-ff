@@ -89,17 +89,29 @@
             <input
               type="text"
               name="place-name"
+              id="place-input"
               class="popup__input popup__input_type_card-name"
               placeholder="Название"
               required
+              minlength="2"
+              maxlength="30"
+              pattern="^[а-яА-ЯёЁa-zA-Z \-]+$"
+              data-error-message="Разрешены только латинские, кириллические буквы, знаки дефиса и пробелы"
             />
+            <p class="form__input-error place-input-error">
+              Вы пропустили это поле.
+            </p>
             <input
               type="url"
               name="link"
+              id="link-input"
               class="popup__input popup__input_type_url"
               placeholder="Ссылка на картинку"
               required
             />
+            <p class="form__input-error link-input-error">
+              Введите адрес сайта.
+            </p>
             <button type="submit" class="button popup__button">
               Сохранить
             </button>

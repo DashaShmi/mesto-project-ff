@@ -88,6 +88,8 @@ function handleFormNewPlaсe(evt) {
   );
   cardList.prepend(createdCard);
   closePopup(newCardPopup);
+  newPlaceNameInput.value = "";
+  newPlaceUrlInput.value = "";
 }
 formNewPlace.addEventListener("submit", handleFormNewPlaсe);
 
@@ -114,7 +116,7 @@ initialCards.forEach(function (cardData) {
 
 // для упрощения теста
 // убрать потом
-openPopup(profilePopup);
+openPopup(newCardPopup);
 
 const validationFunctions = enableValidation({
   formSelector: ".popup__form",
