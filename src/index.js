@@ -1,6 +1,6 @@
 import { createCard, deleteCard, handleLikeButton } from "./components/card";
 import "./index.css";
-import { getMe, getCards, saveProfile } from "./components/api";
+import { getMe, getCards, saveProfile, saveNewCard } from "./components/api";
 import { closePopup, openPopup } from "./components/modal";
 import { enableValidation } from "./components/validation";
 
@@ -53,6 +53,7 @@ function handleProfileFormSubmit(evt) {
   profileName.textContent = profileNameInput.value;
   profileDescr.textContent = profileDescrInput.value;
   closePopup(profilePopup);
+
   saveProfile({
     name: profileNameInput.value,
     about: profileDescrInput.value,
@@ -95,6 +96,7 @@ function handleFormNewPlaсe(evt) {
   closePopup(newCardPopup);
   newPlaceNameInput.value = "";
   newPlaceUrlInput.value = "";
+  saveNewCard(cardDataNew);
 }
 formNewPlace.addEventListener("submit", handleFormNewPlaсe);
 
@@ -122,9 +124,9 @@ getCards().then((data) => {
   });
 });
 
-// для упрощения теста
-// убрать потом
-openPopup(newCardPopup);
+// // для упрощения теста
+// // убрать потом
+// openPopup(newCardPopup);
 
 const validationFunctions = enableValidation({
   formSelector: ".popup__form",
@@ -143,3 +145,5 @@ getMe().then((profileData) => {
   profileDescr.textContent = profileData.about;
   profileAvatar.style.backgroundImage = `url(${profileData.avatar})`;
 });
+
+saveNewCard();
