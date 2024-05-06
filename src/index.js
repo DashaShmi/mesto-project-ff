@@ -1,6 +1,6 @@
 import { createCard, deleteCard, handleLikeButton } from "./components/card";
 import "./index.css";
-import { initialCards } from "./components/cards";
+import { getMe, getCards, saveProfile } from "./components/api";
 import { closePopup, openPopup } from "./components/modal";
 import { enableValidation } from "./components/validation";
 
@@ -11,6 +11,7 @@ const newCardPopup = document.querySelector(".popup_type_new-card");
 // forms
 const profileForm = document.querySelector(".popup__form[name='edit-profile']");
 const formNewPlace = document.querySelector(".popup__form[name='new-place']");
+const profileAvatar = document.querySelector(".profile__image");
 // профиль
 const profileEditButton = document.querySelector(".profile__edit-button");
 const profileNameInput = document.querySelector(".popup__input_type_name");
@@ -52,6 +53,10 @@ function handleProfileFormSubmit(evt) {
   profileName.textContent = profileNameInput.value;
   profileDescr.textContent = profileDescrInput.value;
   closePopup(profilePopup);
+  saveProfile({
+    name: profileNameInput.value,
+    about: profileDescrInput.value,
+  });
 }
 profileForm.addEventListener("submit", handleProfileFormSubmit);
 
@@ -104,14 +109,17 @@ popups.forEach(function (popup) {
 });
 
 // юлпбнанал
-initialCards.forEach(function (cardData) {
-  const createdCard = createCard(
-    cardData,
-    openPopupFromImg,
-    deleteCard,
-    handleLikeButton
-  );
-  cardList.append(createdCard);
+
+getCards().then((data) => {
+  data.forEach(function (cardData) {
+    const createdCard = createCard(
+      cardData,
+      openPopupFromImg,
+      deleteCard,
+      handleLikeButton
+    );
+    cardList.append(createdCard);
+  });
 });
 
 // для упрощения теста
@@ -129,3 +137,9 @@ const validationFunctions = enableValidation({
 
 // Это мне жеско подсказали как сделать чтобы clearValidation была видна
 const clearValidation = validationFunctions.clearValidation;
+
+getMe().then((profileData) => {
+  profileName.textContent = profileData.name;
+  profileDescr.textContent = profileData.about;
+  profileAvatar.style.backgroundImage = `url(${profileData.avatar})`;
+});
