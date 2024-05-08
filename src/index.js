@@ -110,20 +110,6 @@ popups.forEach(function (popup) {
   });
 });
 
-// юлпбнанал
-
-getCards().then((data) => {
-  data.forEach(function (cardData) {
-    const createdCard = createCard(
-      cardData,
-      openPopupFromImg,
-      deleteCard,
-      handleLikeButton
-    );
-    cardList.append(createdCard);
-  });
-});
-
 // // для упрощения теста
 // // убрать потом
 // openPopup(newCardPopup);
@@ -140,10 +126,27 @@ const validationFunctions = enableValidation({
 // Это мне жеско подсказали как сделать чтобы clearValidation была видна
 const clearValidation = validationFunctions.clearValidation;
 
-getMe().then((profileData) => {
+const profilePromise = getMe();
+const cardsPromise = getCards();
+
+const dataPromise = Promise.all([profilePromise, cardsPromise]);
+
+dataPromise.then((data) => {
+  console.log(data);
+  const profileData = data[0];
+  const cardsData = data[1];
+
   profileName.textContent = profileData.name;
   profileDescr.textContent = profileData.about;
   profileAvatar.style.backgroundImage = `url(${profileData.avatar})`;
-});
 
-saveNewCard();
+  cardsData.forEach(function (cardData) {
+    const createdCard = createCard(
+      cardData,
+      openPopupFromImg,
+      deleteCard,
+      handleLikeButton
+    );
+    cardList.append(createdCard);
+  });
+});
