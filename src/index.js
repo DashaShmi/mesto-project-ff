@@ -1,6 +1,12 @@
 import { createCard, deleteCard, handleLikeButton } from "./components/card";
 import "./index.css";
-import { getMe, getCards, saveProfile, saveNewCard } from "./components/api";
+import {
+  getMe,
+  getCards,
+  saveProfile,
+  saveNewCard,
+  deleteCardFromServer,
+} from "./components/api";
 import { closePopup, openPopup } from "./components/modal";
 import { enableValidation } from "./components/validation";
 
@@ -94,7 +100,7 @@ function handleFormNewPlaсe(evt) {
       serverCardData,
       profileId,
       openPopupFromImg,
-      deleteCard,
+      deleteCardOnClick,
       handleLikeButton
     );
     cardList.prepend(createdCard);
@@ -151,10 +157,15 @@ dataPromise.then((data) => {
       cardData,
       profileId,
       openPopupFromImg,
-      deleteCard,
+      deleteCardOnClick,
       handleLikeButton
     );
 
     cardList.append(createdCard);
   });
 });
+
+function deleteCardOnClick(createdCard) {
+  deleteCard(createdCard);
+  deleteCardFromServer(createdCard.dataset.id);
+}

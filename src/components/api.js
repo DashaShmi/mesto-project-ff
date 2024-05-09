@@ -46,3 +46,12 @@ export function saveNewCard(cardData) {
     return res.json();
   });
 }
+
+export function deleteCardFromServer(cardId) {
+  return fetch(`https://nomoreparties.co/v1/wff-cohort-12/cards/${cardId}`, {
+    method: "DELETE",
+    headers: {
+      authorization: "2798e004-6d38-4fe5-b840-9ed182b5c951",
+    },
+  });
+}

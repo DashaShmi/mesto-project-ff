@@ -8,6 +8,9 @@ export function createCard(
   const templateElement = document.getElementById("card-template");
   const card = templateElement.content.querySelector(".card");
   const clonedCard = card.cloneNode(true);
+  clonedCard.dataset.id = cardData._id;
+  // debugger;
+
   const deleteButton = clonedCard.querySelector(".card__delete-button");
   const cardDescr = clonedCard.querySelector(".card__title");
   cardDescr.innerText = cardData.name;
