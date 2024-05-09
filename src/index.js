@@ -88,18 +88,20 @@ function handleFormNewPlaсe(evt) {
     name: name,
     link: url,
   };
-  const createdCard = createCard(
-    cardDataNew,
-    profileId,
-    openPopupFromImg,
-    deleteCard,
-    handleLikeButton
-  );
-  cardList.prepend(createdCard);
+
+  saveNewCard(cardDataNew).then((serverCardData) => {
+    const createdCard = createCard(
+      serverCardData,
+      profileId,
+      openPopupFromImg,
+      deleteCard,
+      handleLikeButton
+    );
+    cardList.prepend(createdCard);
+  });
   closePopup(newCardPopup);
   newPlaceNameInput.value = "";
   newPlaceUrlInput.value = "";
-  saveNewCard(cardDataNew);
 }
 formNewPlace.addEventListener("submit", handleFormNewPlaсe);
 
@@ -152,16 +154,6 @@ dataPromise.then((data) => {
       deleteCard,
       handleLikeButton
     );
-
-    const likeButton = createdCard.querySelector(".likke-button");
-
-    if (cardData.likes.includes(profileData.id)) {
-      addLike(likeButton);
-    }
-
-    if (cardData.owner.id !== profileData.id) {
-      hideRemove(createdCard);
-    }
 
     cardList.append(createdCard);
   });
