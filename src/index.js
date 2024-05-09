@@ -18,6 +18,7 @@ const profileNameInput = document.querySelector(".popup__input_type_name");
 const profileDescrInput = document.querySelector(
   ".popup__input_type_description"
 );
+let profileId = "-";
 const profileName = document.querySelector(".profile__title");
 const profileDescr = document.querySelector(".profile__description");
 //новое место
@@ -27,6 +28,7 @@ const newPlaceNameInput = document.querySelector(
 const newPlaceUrlInput = document.querySelector(".popup__input_type_url");
 // остальное
 const cardList = document.querySelector(".places__list");
+//
 
 // Функции для открытия модального окна "редактирования профиля"
 profileEditButton.addEventListener("click", function () {
@@ -88,6 +90,7 @@ function handleFormNewPlaсe(evt) {
   };
   const createdCard = createCard(
     cardDataNew,
+    profileId,
     openPopupFromImg,
     deleteCard,
     handleLikeButton
@@ -139,14 +142,27 @@ dataPromise.then((data) => {
   profileName.textContent = profileData.name;
   profileDescr.textContent = profileData.about;
   profileAvatar.style.backgroundImage = `url(${profileData.avatar})`;
+  profileId = profileData._id;
 
   cardsData.forEach(function (cardData) {
     const createdCard = createCard(
       cardData,
+      profileId,
       openPopupFromImg,
       deleteCard,
       handleLikeButton
     );
+
+    const likeButton = createdCard.querySelector(".likke-button");
+
+    if (cardData.likes.includes(profileData.id)) {
+      addLike(likeButton);
+    }
+
+    if (cardData.owner.id !== profileData.id) {
+      hideRemove(createdCard);
+    }
+
     cardList.append(createdCard);
   });
 });

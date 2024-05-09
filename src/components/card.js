@@ -1,5 +1,6 @@
 export function createCard(
   cardData,
+  profileId,
   clickCallback,
   deleteCallback,
   likeCallback
@@ -35,6 +36,10 @@ export function createCard(
       likeCallback(likeButton);
     }
   });
+
+  if (cardData.owner._id !== profileId) {
+    deleteButton.remove();
+  }
 
   return clonedCard;
 }
