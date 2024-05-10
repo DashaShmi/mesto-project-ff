@@ -9,7 +9,6 @@ export function createCard(
   const card = templateElement.content.querySelector(".card");
   const clonedCard = card.cloneNode(true);
   clonedCard.dataset.id = cardData._id;
-  // debugger;
 
   const deleteButton = clonedCard.querySelector(".card__delete-button");
   const cardDescr = clonedCard.querySelector(".card__title");
@@ -44,6 +43,13 @@ export function createCard(
     deleteButton.remove();
   }
 
+  if (
+    cardData.likes.some(function (likersProfile) {
+      return likersProfile._id === profileId;
+    })
+  ) {
+    toggleLikeButton(likeButton);
+  }
   return clonedCard;
 }
 
@@ -52,6 +58,6 @@ export function deleteCard(createdCard) {
 }
 
 // Функция обработчика лайка
-export function handleLikeButton(likeButton) {
+export function toggleLikeButton(likeButton) {
   likeButton.classList.toggle("card__like-button_is-active");
 }

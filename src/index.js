@@ -1,4 +1,4 @@
-import { createCard, deleteCard, handleLikeButton } from "./components/card";
+import { createCard, deleteCard, toggleLikeButton } from "./components/card";
 import "./index.css";
 import {
   getMe,
@@ -168,7 +168,6 @@ function deleteCardOnClick(createdCard) {
 }
 
 function addLikeOnClick(createdCard, buttonLike) {
-  debugger;
-  handleLikeButton(buttonLike);
+  toggleLikeButton(buttonLike);
   addLike(createdCard.dataset.id);
 }
