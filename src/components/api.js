@@ -1,57 +1,65 @@
+const config = {
+  baseUrl: "https://nomoreparties.co/v1/wff-cohort-12",
+  headers: {
+    authorization: "2798e004-6d38-4fe5-b840-9ed182b5c951",
+    "Content-Type": "application/json",
+  },
+};
+
 export function getMe() {
-  const reponsePromise = fetch(
-    "https://nomoreparties.co/v1/wff-cohort-12/users/me",
-    {
-      headers: {
-        authorization: "2798e004-6d38-4fe5-b840-9ed182b5c951",
-      },
+  const reponsePromise = fetch(`${config.baseUrl}/users/me`, {
+    headers: config.headers,
+  });
+
+  const jsonPromise = reponsePromise.then((res) => {
+    if (res.ok) {
+      return res.json();
     }
-  );
-  const jsonPromise = reponsePromise.then((res) => res.json());
+    return Promise.reject(`Ошибка: ${res.status}`);
+  });
   return jsonPromise;
 }
 
 export function getCards() {
-  return fetch(" https://nomoreparties.co/v1/wff-cohort-12/cards", {
-    headers: {
-      authorization: "2798e004-6d38-4fe5-b840-9ed182b5c951",
-    },
+  return fetch(`${config.baseUrl}/cards`, {
+    headers: config.headers,
   }).then((res) => {
-    return res.json();
+    if (res.ok) {
+      return res.json();
+    }
+    return Promise.reject(`Ошибка: ${res.status}`);
   });
 }
 
 export function saveProfile(profileData) {
-  return fetch("https://nomoreparties.co/v1/wff-cohort-12/users/me", {
+  return fetch(`${config.baseUrl}/users/me`, {
     method: "PATCH",
-    headers: {
-      authorization: "2798e004-6d38-4fe5-b840-9ed182b5c951",
-      "Content-Type": "application/json",
-    },
+    headers: config.headers,
     body: JSON.stringify(profileData),
   }).then((res) => {
-    return res.json();
+    if (res.ok) {
+      return res.json();
+    }
+    return Promise.reject(`Ошибка: ${res.status}`);
   });
 }
 
 export function saveNewCard(cardData) {
-  return fetch("https://nomoreparties.co/v1/wff-cohort-12/cards", {
+  return fetch(`${config.baseUrl}/cards`, {
     method: "POST",
-    headers: {
-      authorization: "2798e004-6d38-4fe5-b840-9ed182b5c951",
-      "Content-Type": "application/json",
-    },
+    headers: config.headers,
     body: JSON.stringify(cardData),
   }).then((res) => {
-    return res.json();
+    if (res.ok) {
+      return res.json();
+    }
+    return Promise.reject(`Ошибка: ${res.status}`);
   });
 }
 
 export function deleteCardFromServer(cardId) {
-  return fetch(`https://nomoreparties.co/v1/wff-cohort-12/cards/${cardId}`, {
+  return fetch(`${config.baseUrl}/cards/${cardId}`, {
     method: "DELETE",
-    headers: {
-      authorization: "2798e004-6d38-4fe5-b840-9ed182b5c951",
-    },
+    headers: config.headers,
   });
 }
