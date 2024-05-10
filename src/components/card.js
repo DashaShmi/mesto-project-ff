@@ -16,9 +16,9 @@ export function createCard(
   const cardImg = clonedCard.querySelector(".card__image");
   cardImg.src = cardData.link;
   cardImg.alt = `Красоты мира ${cardData.alt}`;
-  const likesCount = clonedCard.querySelector(".likes__count");
+  const likesCountElement = clonedCard.querySelector(".likes__count");
 
-  likesCount.textContent = `${cardData.likes.length}`;
+  likesCountElement.textContent = `${cardData.likes.length}`;
 
   deleteButton.addEventListener("click", function () {
     if (deleteCallback) {
@@ -35,7 +35,7 @@ export function createCard(
   const likeButton = clonedCard.querySelector(".card__like-button");
   likeButton.addEventListener("click", function () {
     if (likeCallback) {
-      likeCallback(clonedCard, likeButton);
+      likeCallback(clonedCard, likeButton, likesCountElement);
     }
   });
 

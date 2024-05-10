@@ -65,7 +65,6 @@ export function deleteCardFromServer(cardId) {
 }
 
 export function addLike(cardId) {
-  debugger;
   return fetch(`${config.baseUrl}/cards/likes/${cardId}`, {
     method: "PUT",
     headers: config.headers,
@@ -82,3 +81,5 @@ export function deleteLike() {
     method: "DELETE",
   });
 }
+
+export function updateAvatar() {}

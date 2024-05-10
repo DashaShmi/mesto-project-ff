@@ -8,6 +8,7 @@ import {
   deleteCardFromServer,
   addLike,
   deleteLike,
+  updateAvatar,
 } from "./components/api";
 import { closePopup, openPopup } from "./components/modal";
 import { enableValidation } from "./components/validation";
@@ -103,7 +104,7 @@ function handleFormNewPlaсe(evt) {
       profileId,
       openPopupFromImg,
       deleteCardOnClick,
-      addLikeOnClick
+      toggleLikeOnClick
     );
     cardList.prepend(createdCard);
   });
@@ -156,7 +157,7 @@ dataPromise.then((data) => {
       profileId,
       openPopupFromImg,
       deleteCardOnClick,
-      addLikeOnClick
+      toggleLikeOnClick
     );
     cardList.append(createdCard);
   });
@@ -167,7 +168,15 @@ function deleteCardOnClick(createdCard) {
   deleteCardFromServer(createdCard.dataset.id);
 }
 
-function addLikeOnClick(createdCard, buttonLike) {
+function toggleLikeOnClick(createdCard, buttonLike, likeCountElement) {
   toggleLikeButton(buttonLike);
-  addLike(createdCard.dataset.id);
+
+  // надо:
+  // если нет лайка - отправить на серкер лайк
+  // если есть лайк - удалить на серере лайк
+
+  // только добавляет лайк
+  addLike(createdCard.dataset.id).then((cardData) => {
+    likeCountElement.innerText = cardData.likes.length;
+  });
 }
