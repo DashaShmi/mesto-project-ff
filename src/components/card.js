@@ -36,7 +36,7 @@ export function createCard(
   const likeButton = clonedCard.querySelector(".card__like-button");
   likeButton.addEventListener("click", function () {
     if (likeCallback) {
-      likeCallback(likeButton);
+      likeCallback(clonedCard, likeButton);
     }
   });
 

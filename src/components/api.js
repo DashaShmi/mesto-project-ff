@@ -63,3 +63,22 @@ export function deleteCardFromServer(cardId) {
     headers: config.headers,
   });
 }
+
+export function addLike(cardId) {
+  debugger;
+  return fetch(`${config.baseUrl}/cards/likes/${cardId}`, {
+    method: "PUT",
+    headers: config.headers,
+  }).then((res) => {
+    if (res.ok) {
+      return res.json();
+    }
+    return Promise.reject(`Ошибка: ${res.status}`);
+  });
+}
+
+export function deleteLike() {
+  return fetch(`${config.baseUrl}/cards/likes/${cardId}`, {
+    method: "DELETE",
+  });
+}

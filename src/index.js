@@ -6,6 +6,8 @@ import {
   saveProfile,
   saveNewCard,
   deleteCardFromServer,
+  addLike,
+  deleteLike,
 } from "./components/api";
 import { closePopup, openPopup } from "./components/modal";
 import { enableValidation } from "./components/validation";
@@ -101,7 +103,7 @@ function handleFormNewPlaсe(evt) {
       profileId,
       openPopupFromImg,
       deleteCardOnClick,
-      handleLikeButton
+      addLikeOnClick
     );
     cardList.prepend(createdCard);
   });
@@ -120,10 +122,6 @@ popups.forEach(function (popup) {
     }
   });
 });
-
-// // для упрощения теста
-// // убрать потом
-// openPopup(newCardPopup);
 
 const validationFunctions = enableValidation({
   formSelector: ".popup__form",
@@ -158,9 +156,8 @@ dataPromise.then((data) => {
       profileId,
       openPopupFromImg,
       deleteCardOnClick,
-      handleLikeButton
+      addLikeOnClick
     );
-
     cardList.append(createdCard);
   });
 });
@@ -168,4 +165,10 @@ dataPromise.then((data) => {
 function deleteCardOnClick(createdCard) {
   deleteCard(createdCard);
   deleteCardFromServer(createdCard.dataset.id);
+}
+
+function addLikeOnClick(createdCard, buttonLike) {
+  debugger;
+  handleLikeButton(buttonLike);
+  addLike(createdCard.dataset.id);
 }
