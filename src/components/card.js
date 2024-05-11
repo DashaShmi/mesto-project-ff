@@ -59,5 +59,6 @@ export function deleteCard(createdCard) {
 
 // Функция обработчика лайка
 export function toggleLikeButton(likeButton) {
-  likeButton.classList.toggle("card__like-button_is-active");
+  // тут toggle возращет тру если лайк есть и фолс, если нет
+  return likeButton.classList.toggle("card__like-button_is-active");
 }

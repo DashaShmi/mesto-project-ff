@@ -169,14 +169,17 @@ function deleteCardOnClick(createdCard) {
 }
 
 function toggleLikeOnClick(createdCard, buttonLike, likeCountElement) {
-  toggleLikeButton(buttonLike);
+  const likeAdded = toggleLikeButton(buttonLike);
+  const cardId = createdCard.dataset.id;
 
-  // надо:
-  // если нет лайка - отправить на серкер лайк
-  // если есть лайк - удалить на серере лайк
-
-  // только добавляет лайк
-  addLike(createdCard.dataset.id).then((cardData) => {
-    likeCountElement.innerText = cardData.likes.length;
-  });
+  if (likeAdded === true) {
+    // только добавляет лайк
+    addLike(cardId).then((cardData) => {
+      likeCountElement.innerText = cardData.likes.length;
+    });
+  } else {
+    deleteLike(cardId).then((cardData) => {
+      likeCountElement.innerText = cardData.likes.length;
+    });
+  }
 }
