@@ -32,13 +32,16 @@ const profileDescrInput = document.querySelector(
 let profileId = "-";
 const profileName = document.querySelector(".profile__title");
 const profileDescr = document.querySelector(".profile__description");
+const profileButtonSubmit = profileForm.querySelector(".popup__button");
 // новое место
 const newPlaceNameInput = formNewPlace.querySelector(
   ".popup__input_type_card-name"
 );
+const newPlaceButtonSubmit = formNewPlace.querySelector(".popup__button");
 const newPlaceUrlInput = formNewPlace.querySelector(".popup__input_type_url");
 // аватар
 const avatarUrlInput = avatarForm.querySelector(".popup__input_type_url");
+const avatarButtonSubmit = avatarForm.querySelector(".popup__button");
 // остальное
 const cardList = document.querySelector(".places__list");
 //
@@ -62,17 +65,31 @@ function openPopupFromImg(cardData) {
   popupDescr.innerText = cardData.name;
 }
 
-// Обработчик отправки формы
+// Обработчик отправки формы профиля
 function handleProfileFormSubmit(evt) {
   evt.preventDefault();
+
   profileName.textContent = profileNameInput.value;
   profileDescr.textContent = profileDescrInput.value;
-  closePopup(profilePopup);
+
+  const buttonText = profileButtonSubmit.innerText;
+
+  profileButtonSubmit.disabled = true;
+  profileButtonSubmit.innerText = "Сохранение...";
 
   saveProfile({
     name: profileNameInput.value,
     about: profileDescrInput.value,
-  });
+  })
+    .then(() => {})
+    .catch((err) => {
+      console.log(err);
+    })
+    .finally(() => {
+      closePopup(profilePopup);
+      profileButtonSubmit.disabled = true;
+      profileButtonSubmit.innerText = buttonText;
+    });
 }
 profileForm.addEventListener("submit", handleProfileFormSubmit);
 
@@ -108,6 +125,11 @@ function handleFormNewPlaсe(evt) {
     link: url,
   };
 
+  const buttonText = newPlaceButtonSubmit.innerText;
+
+  newPlaceButtonSubmit.disabled = true;
+  newPlaceButtonSubmit.innerText = "Сохранение...";
+
   saveNewCard(cardDataNew)
     .then((serverCardData) => {
       const createdCard = createCard(
@@ -121,10 +143,14 @@ function handleFormNewPlaсe(evt) {
     })
     .catch((err) => {
       console.log(err);
+    })
+    .finally(() => {
+      closePopup(newCardPopup);
+      newPlaceNameInput.value = "";
+      newPlaceUrlInput.value = "";
+      newPlaceButtonSubmit.disabled = true;
+      newPlaceButtonSubmit.innerText = buttonText;
     });
-  closePopup(newCardPopup);
-  newPlaceNameInput.value = "";
-  newPlaceUrlInput.value = "";
 }
 formNewPlace.addEventListener("submit", handleFormNewPlaсe);
 
@@ -135,6 +161,11 @@ function handleAvatarFormSubmit(evt) {
     avatar: avatarUrlInput.value,
   };
 
+  const buttonText = avatarButtonSubmit.innerText;
+
+  avatarButtonSubmit.disabled = true;
+  avatarButtonSubmit.innerText = "Сохранение...";
+
   updateAvatar(newAvatarData)
     .then((profileData) => {
       // debugger;
@@ -142,9 +173,13 @@ function handleAvatarFormSubmit(evt) {
     })
     .catch((err) => {
       console.log(err);
+    })
+    .finally(() => {
+      closePopup(avatarPopup);
+      avatarUrlInput.value = "";
+      avatarButtonSubmit.disabled = true;
+      avatarButtonSubmit.innerText = buttonText;
     });
-  closePopup(avatarPopup);
-  avatarUrlInput.value = "";
 }
 avatarForm.addEventListener("submit", handleAvatarFormSubmit);
 
