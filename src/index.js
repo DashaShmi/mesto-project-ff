@@ -173,7 +173,6 @@ function handleAvatarFormSubmit(evt) {
 
   updateAvatar(newAvatarData)
     .then((profileData) => {
-      // debugger;
       profileAvatar.style.backgroundImage = `url(${profileData.avatar})`;
     })
     .catch((err) => {
@@ -217,7 +216,6 @@ const dataPromise = Promise.all([profilePromise, cardsPromise]);
 
 dataPromise
   .then((data) => {
-    console.log(data);
     const profileData = data[0];
     const cardsData = data[1];
 
