@@ -106,12 +106,17 @@ popupCloseButtons.forEach(function (button) {
 document
   .querySelector(".profile__add-button")
   .addEventListener("click", function () {
+    clearValidation(formNewPlace);
+    newPlaceNameInput.value = "";
+    newPlaceUrlInput.value = "";
     openPopup(newCardPopup);
   });
 
 // Функция для открытия модального окна обновления аватара
 
 profileAvatar.addEventListener("click", function () {
+  clearValidation(avatarForm);
+  avatarUrlInput.value = "";
   openPopup(avatarPopup);
 });
 
