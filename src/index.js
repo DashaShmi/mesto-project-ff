@@ -108,16 +108,20 @@ function handleFormNewPlaсe(evt) {
     link: url,
   };
 
-  saveNewCard(cardDataNew).then((serverCardData) => {
-    const createdCard = createCard(
-      serverCardData,
-      profileId,
-      openPopupFromImg,
-      deleteCardOnClick,
-      toggleLikeOnClick
-    );
-    cardList.prepend(createdCard);
-  });
+  saveNewCard(cardDataNew)
+    .then((serverCardData) => {
+      const createdCard = createCard(
+        serverCardData,
+        profileId,
+        openPopupFromImg,
+        deleteCardOnClick,
+        toggleLikeOnClick
+      );
+      cardList.prepend(createdCard);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
   closePopup(newCardPopup);
   newPlaceNameInput.value = "";
   newPlaceUrlInput.value = "";
@@ -131,10 +135,14 @@ function handleAvatarFormSubmit(evt) {
     avatar: avatarUrlInput.value,
   };
 
-  updateAvatar(newAvatarData).then((profileData) => {
-    // debugger;
-    profileAvatar.style.backgroundImage = `url(${profileData.avatar})`;
-  });
+  updateAvatar(newAvatarData)
+    .then((profileData) => {
+      // debugger;
+      profileAvatar.style.backgroundImage = `url(${profileData.avatar})`;
+    })
+    .catch((err) => {
+      console.log(err);
+    });
   closePopup(avatarPopup);
   avatarUrlInput.value = "";
 }
@@ -167,27 +175,31 @@ const cardsPromise = getCards();
 
 const dataPromise = Promise.all([profilePromise, cardsPromise]);
 
-dataPromise.then((data) => {
-  console.log(data);
-  const profileData = data[0];
-  const cardsData = data[1];
+dataPromise
+  .then((data) => {
+    console.log(data);
+    const profileData = data[0];
+    const cardsData = data[1];
 
-  profileName.textContent = profileData.name;
-  profileDescr.textContent = profileData.about;
-  profileAvatar.style.backgroundImage = `url(${profileData.avatar})`;
-  profileId = profileData._id;
+    profileName.textContent = profileData.name;
+    profileDescr.textContent = profileData.about;
+    profileAvatar.style.backgroundImage = `url(${profileData.avatar})`;
+    profileId = profileData._id;
 
-  cardsData.forEach(function (cardData) {
-    const createdCard = createCard(
-      cardData,
-      profileId,
-      openPopupFromImg,
-      deleteCardOnClick,
-      toggleLikeOnClick
-    );
-    cardList.append(createdCard);
+    cardsData.forEach(function (cardData) {
+      const createdCard = createCard(
+        cardData,
+        profileId,
+        openPopupFromImg,
+        deleteCardOnClick,
+        toggleLikeOnClick
+      );
+      cardList.append(createdCard);
+    });
+  })
+  .catch((err) => {
+    console.log(err);
   });
-});
 
 function deleteCardOnClick(createdCard) {
   deleteCard(createdCard);
@@ -207,7 +219,11 @@ function toggleLikeOnClick(createdCard, buttonLike, likeCountElement) {
     actionPromise = deleteLike(cardId);
   }
 
-  actionPromise.then((cardData) => {
-    likeCountElement.innerText = cardData.likes.length;
-  });
+  actionPromise
+    .then((cardData) => {
+      likeCountElement.innerText = cardData.likes.length;
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 }
