@@ -21,8 +21,9 @@ const avatarPopup = document.querySelector(".popup_type_avatar");
 // forms
 const profileForm = document.querySelector(".popup__form[name='edit-profile']");
 const formNewPlace = document.querySelector(".popup__form[name='new-place']");
-const profileAvatar = document.querySelector(".profile__image");
+const avatarForm = document.querySelector(".popup__form[name='edit-avatar']");
 // профиль
+const profileAvatar = document.querySelector(".profile__image");
 const profileEditButton = document.querySelector(".profile__edit-button");
 const profileNameInput = document.querySelector(".popup__input_type_name");
 const profileDescrInput = document.querySelector(
@@ -31,11 +32,13 @@ const profileDescrInput = document.querySelector(
 let profileId = "-";
 const profileName = document.querySelector(".profile__title");
 const profileDescr = document.querySelector(".profile__description");
-//новое место
-const newPlaceNameInput = document.querySelector(
+// новое место
+const newPlaceNameInput = formNewPlace.querySelector(
   ".popup__input_type_card-name"
 );
-const newPlaceUrlInput = document.querySelector(".popup__input_type_url");
+const newPlaceUrlInput = formNewPlace.querySelector(".popup__input_type_url");
+// аватар
+const avatarUrlInput = avatarForm.querySelector(".popup__input_type_url");
 // остальное
 const cardList = document.querySelector(".places__list");
 //
@@ -120,6 +123,21 @@ function handleFormNewPlaсe(evt) {
   newPlaceUrlInput.value = "";
 }
 formNewPlace.addEventListener("submit", handleFormNewPlaсe);
+
+// Обработчик отправки формы для окна Аватар
+function handleAvatarFormSubmit(evt) {
+  evt.preventDefault();
+  const newAvatarData = {
+    avatar: avatarUrlInput.value,
+  };
+
+  updateAvatar(newAvatarData).then((profileData) => {
+    // debugger;
+  });
+  closePopup(avatarPopup);
+  avatarUrlInput.value = "";
+}
+avatarForm.addEventListener("submit", handleAvatarFormSubmit);
 
 // Закрытие попапа кликом на оверлей
 const popups = document.querySelectorAll(".popup");
