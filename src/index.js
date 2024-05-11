@@ -172,14 +172,16 @@ function toggleLikeOnClick(createdCard, buttonLike, likeCountElement) {
   const likeAdded = toggleLikeButton(buttonLike);
   const cardId = createdCard.dataset.id;
 
+  let actionPromise;
+
   if (likeAdded === true) {
     // только добавляет лайк
-    addLike(cardId).then((cardData) => {
-      likeCountElement.innerText = cardData.likes.length;
-    });
+    actionPromise = addLike(cardId);
   } else {
-    deleteLike(cardId).then((cardData) => {
-      likeCountElement.innerText = cardData.likes.length;
-    });
+    actionPromise = deleteLike(cardId);
   }
+
+  actionPromise.then((cardData) => {
+    likeCountElement.innerText = cardData.likes.length;
+  });
 }
