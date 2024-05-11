@@ -133,6 +133,7 @@ function handleAvatarFormSubmit(evt) {
 
   updateAvatar(newAvatarData).then((profileData) => {
     // debugger;
+    profileAvatar.style.backgroundImage = `url(${profileData.avatar})`;
   });
   closePopup(avatarPopup);
   avatarUrlInput.value = "";
