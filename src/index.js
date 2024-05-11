@@ -17,6 +17,7 @@ import { enableValidation } from "./components/validation";
 const bigImagePopup = document.querySelector(".popup_type_image");
 const profilePopup = document.querySelector(".popup_type_edit");
 const newCardPopup = document.querySelector(".popup_type_new-card");
+const avatarPopup = document.querySelector(".popup_type_avatar");
 // forms
 const profileForm = document.querySelector(".popup__form[name='edit-profile']");
 const formNewPlace = document.querySelector(".popup__form[name='new-place']");
@@ -87,6 +88,12 @@ document
   .addEventListener("click", function () {
     openPopup(newCardPopup);
   });
+
+// Функция для открытия модального окна обновления аватара
+
+profileAvatar.addEventListener("click", function () {
+  openPopup(avatarPopup);
+});
 
 // Обработчик отправки формы для окна "добавить новое место"
 function handleFormNewPlaсe(evt) {

@@ -22,5 +22,12 @@
 .wrapper__like {
   display: flex;
   flex-direction: column;
-  align-items: flex-end;
+  align-items: center;
+}
+
+.likes__count {
+  text-align: center;
+  font-size: 13px;
+  font-style: normal;
+  margin-top: 3px;
 }
