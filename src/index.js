@@ -111,8 +111,7 @@ document
   .querySelector(".profile__add-button")
   .addEventListener("click", function () {
     clearValidation(formNewPlace);
-    newPlaceNameInput.value = "";
-    newPlaceUrlInput.value = "";
+    formNewPlace.reset();
     openPopup(newCardPopup);
   });
 
@@ -155,8 +154,6 @@ function handleFormNewPlaсe(evt) {
     })
     .finally(() => {
       closePopup(newCardPopup);
-      newPlaceNameInput.value = "";
-      newPlaceUrlInput.value = "";
       newPlaceButtonSubmit.disabled = true;
       newPlaceButtonSubmit.innerText = buttonText;
     });
@@ -244,8 +241,13 @@ dataPromise
   });
 
 function deleteCardOnClick(createdCard) {
-  deleteCard(createdCard);
-  deleteCardFromServer(createdCard.dataset.id);
+  deleteCardFromServer(createdCard.dataset.id)
+    .then(() => {
+      deleteCard(createdCard);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 }
 
 function toggleLikeOnClick(createdCard, buttonLike, likeCountElement) {
