@@ -15,7 +15,7 @@ export function createCard(
   cardDescr.innerText = cardData.name;
   const cardImg = clonedCard.querySelector(".card__image");
   cardImg.src = cardData.link;
-  cardImg.alt = `Красоты мира ${cardData.alt}`;
+  cardImg.alt = `Фотография ${cardData.name}`;
   const likesCountElement = clonedCard.querySelector(".likes__count");
 
   likesCountElement.textContent = `${cardData.likes.length}`;

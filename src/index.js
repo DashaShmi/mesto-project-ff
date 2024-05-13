@@ -60,6 +60,7 @@ function openPopupFromImg(cardData) {
 
   const popupImage = document.querySelector(".popup__image");
   popupImage.src = cardData.link;
+  popupImage.alt = `Фотография ${cardData.name}`;
 
   const popupDescr = document.querySelector(".popup__caption");
   popupDescr.innerText = cardData.name;
