@@ -41,6 +41,12 @@ export function createCard(
 
   if (cardData.owner._id !== profileId) {
     deleteButton.remove();
+  } else {
+    deleteButton.addEventListener("click", function () {
+      if (deleteCallback) {
+        deleteCallback(clonedCard);
+      }
+    });
   }
 
   if (
