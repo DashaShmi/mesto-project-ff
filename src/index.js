@@ -70,8 +70,8 @@ function openPopupFromImg(cardData) {
 function handleProfileFormSubmit(evt) {
   evt.preventDefault();
 
-  profileName.textContent = profileNameInput.value;
-  profileDescr.textContent = profileDescrInput.value;
+  // profileName.textContent = profileNameInput.value;
+  // profileDescr.textContent = profileDescrInput.value;
 
   const buttonText = profileButtonSubmit.innerText;
 
@@ -82,7 +82,10 @@ function handleProfileFormSubmit(evt) {
     name: profileNameInput.value,
     about: profileDescrInput.value,
   })
-    .then(() => {})
+    .then((profileData) => {
+      profileName.textContent = profileData.name;
+      profileDescr.textContent = profileData.about;
+    })
     .catch((err) => {
       console.log(err);
     })
