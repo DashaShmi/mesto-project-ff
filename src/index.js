@@ -1,4 +1,9 @@
-import { createCard, deleteCard, toggleLikeButton } from "./components/card";
+import {
+  createCard,
+  deleteCard,
+  toggleLikeButton,
+  containsLike,
+} from "./components/card";
 import "./index.css";
 import {
   getMe,
@@ -251,12 +256,11 @@ function deleteCardOnClick(createdCard) {
 }
 
 function toggleLikeOnClick(createdCard, buttonLike, likeCountElement) {
-  const likeAdded = toggleLikeButton(buttonLike);
+  const hasLike = containsLike(buttonLike);
   const cardId = createdCard.dataset.id;
-
   let actionPromise;
 
-  if (likeAdded === true) {
+  if (!hasLike) {
     // только добавляет лайк
     actionPromise = addLike(cardId);
   } else {
@@ -266,6 +270,7 @@ function toggleLikeOnClick(createdCard, buttonLike, likeCountElement) {
   actionPromise
     .then((cardData) => {
       likeCountElement.innerText = cardData.likes.length;
+      toggleLikeButton(buttonLike);
     })
     .catch((err) => {
       console.log(err);

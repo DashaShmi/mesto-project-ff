@@ -68,3 +68,7 @@ export function toggleLikeButton(likeButton) {
   // тут toggle возращет тру если лайк есть и фолс, если нет
   return likeButton.classList.toggle("card__like-button_is-active");
 }
+
+export function containsLike(likeButton) {
+  return likeButton.classList.contains("card__like-button_is-active");
+}
